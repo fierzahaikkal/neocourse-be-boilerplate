@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fierzahaikkal/neocourse-be-golang/pkg/utils"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 )
 

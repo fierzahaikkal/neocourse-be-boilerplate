@@ -1,6 +1,6 @@
 package book
 
-import "github.com/fierzahaikkal/neocourse-be-golang/internal/entity"
+import "github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/entity"
 
 func BookMapper(book *entity.Book) *BookResponse {
 	return &BookResponse{

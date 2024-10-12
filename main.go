@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/fierzahaikkal/neocourse-be/db"
-	"github.com/fierzahaikkal/neocourse-be/internal/configs"
-	"github.com/fierzahaikkal/neocourse-be/pkg/utils"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate/db"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate/internal/configs"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate/pkg/utils"
 	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"

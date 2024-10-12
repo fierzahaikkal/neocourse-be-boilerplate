@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/fierzahaikkal/neocourse-be-golang/internal/entity"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/entity"
 	"gorm.io/gorm"
 )
 

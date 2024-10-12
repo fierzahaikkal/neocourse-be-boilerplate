@@ -1,4 +1,4 @@
-module github.com/fierzahaikkal/neocourse-be-golang
+module github.com/fierzahaikkal/neocourse-be-boilerplate-golang
 
 go 1.22.2
 

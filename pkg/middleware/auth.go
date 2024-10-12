@@ -4,7 +4,7 @@ package middleware
 import (
 	"strings"
 
-	"github.com/fierzahaikkal/neocourse-be-golang/pkg/utils"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
 )
