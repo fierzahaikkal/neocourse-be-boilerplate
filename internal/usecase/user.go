@@ -2,58 +2,56 @@ package usecase
 
 import (
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/entity"
-	userModel "github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/model/user"
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/repository"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/pkg/utils"
+
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/model/user"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthUseCase struct {
-	userRepo *repository.UserRepository
+	UserRepo *repository.UserRepository
 	log      *log.Logger
 }
 
-func NewAuthUsaCase(userRepo *repository.UserRepository, log *log.Logger) *AuthUseCase {
-	return &AuthUseCase{
-		userRepo: userRepo,
-		log:      log,
-	}
+func NewAuthUseCase(userRepo *repository.UserRepository, log *log.Logger) *AuthUseCase {
+	return &AuthUseCase{UserRepo: userRepo, log: log}
 }
 
-func (u *AuthUseCase) Register(req *userModel.SignUpRequest) error {
-	hashed, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+func (uc *AuthUseCase) SignUp(req *user.SignUpRequest) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
 
 	user := entity.User{
+		ID:       utils.GenUUID(),
 		Username: req.Username,
 		Email:    req.Email,
-		Password: string(hashed),
 		Name:     req.Name,
+		Password: string(hashedPassword),
 	}
-	err = u.userRepo.Register(&user)
+
+	err = uc.UserRepo.Register(&user)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func (u *AuthUseCase) SignIn(req *userModel.SignInRequest) (*entity.User, error) {
+func (uc *AuthUseCase) SignIn(req *user.SignInRequest) (*entity.User, error) {
 	var user entity.User
-
-	userFromDB, err := u.userRepo.FindByEmail(req.Email, &user)
+	userFromDb, err := uc.UserRepo.FindByEmail(req.Email, &user)
 	if err != nil {
 		return nil, err
 	}
-	// err := u.userRepo.DB.Where("email = ?", req.Email).First(&user).Error
-	// if err != nil {
-	// 	return err
-	// }
 
-	err = bcrypt.CompareHashAndPassword([]byte(userFromDB.Password), []byte(req.Password))
+	err = bcrypt.CompareHashAndPassword([]byte(userFromDb.Password), []byte(req.Password))
 	if err != nil {
 		return nil, err
 	}
-	return userFromDB, nil
+
+	return userFromDb, nil
 }

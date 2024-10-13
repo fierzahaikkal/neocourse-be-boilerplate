@@ -48,17 +48,13 @@ func main() {
 	userRepo := repository.NewUserRepository(dbConn, logger)
 
 	//use case
-	authUseCase := usecase.NewAuthUsaCase(userRepo, logger)
+	authUseCase := usecase.NewAuthUseCase(userRepo, logger)
 
 	//handlers
 	authHandler := handler.NewAuthHandler(authUseCase, config.JWTSecret, logger)
 
 	//route
-	app.Post("/api/v1/auth/signup", authHandler.Register)
-
-	// -- auth
-
-	// -- book
+	app.Post("/api/v1/auth/signup", authHandler.SignUp)
 
 	// Listen Server
 	logger.Info("Server started on http://localhost:8081")
