@@ -4,12 +4,12 @@ import "github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/entity
 
 func BookMapper(book *entity.Book) *BookResponse {
 	return &BookResponse{
-		ID:        		book.ID,
-		Title:     		book.Title,
-		Author:    		book.Author,
-		Description: 	book.Description,
-		Available: 		book.Available,
-		Genre: 			book.Genre,
-		ImageURI:		book.ImageURI,
+		ID:          book.ID,
+		Title:       book.Title,
+		Author:      book.Author,
+		Description: book.Description,
+		Available:   book.Available,
+		Genre:       book.Genre,
+		ImageURI:    book.ImageURI,
 	}
 }

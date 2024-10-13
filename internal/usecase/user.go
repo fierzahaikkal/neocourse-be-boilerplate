@@ -39,16 +39,21 @@ func (u *AuthUseCase) Register(req *userModel.SignUpRequest) error {
 	return nil
 }
 
-func (u *AuthUseCase) SignIn(req *userModel.SignInRequest) error {
+func (u *AuthUseCase) SignIn(req *userModel.SignInRequest) (*entity.User, error) {
 	var user entity.User
-	err := u.userRepo.DB.Where("email = ?", req.Email).First(&user).Error
-	if err != nil {
-		return err
-	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
+	userFromDB, err := u.userRepo.FindByEmail(req.Email, &user)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	// err := u.userRepo.DB.Where("email = ?", req.Email).First(&user).Error
+	// if err != nil {
+	// 	return err
+	// }
+
+	err = bcrypt.CompareHashAndPassword([]byte(userFromDB.Password), []byte(req.Password))
+	if err != nil {
+		return nil, err
+	}
+	return userFromDB, nil
 }

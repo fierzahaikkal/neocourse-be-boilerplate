@@ -3,16 +3,19 @@ package main
 import (
 	"log"
 
-	"github.com/fierzahaikkal/neocourse-be-boilerplate/db"
-	"github.com/fierzahaikkal/neocourse-be-boilerplate/internal/configs"
-	"github.com/fierzahaikkal/neocourse-be-boilerplate/pkg/utils"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/db"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/configs"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/handler"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/repository"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/usecase"
+	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/pkg/utils"
 	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
-func main(){
+func main() {
 	config := configs.LoadConfig()
 	logger := utils.NewLogger()
 
@@ -42,10 +45,16 @@ func main(){
 	app.Use(recover.New())
 
 	//repositories
+	userRepo := repository.NewUserRepository(dbConn, logger)
 
 	//use case
+	authUseCase := usecase.NewAuthUsaCase(userRepo, logger)
+
+	//handlers
+	authHandler := handler.NewAuthHandler(authUseCase, config.JWTSecret, logger)
 
 	//route
+	app.Post("/api/v1/auth/signup", authHandler)
 
 	// -- auth
 

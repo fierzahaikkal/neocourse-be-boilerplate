@@ -5,8 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-
 func Migrate(db *gorm.DB) error {
-    // Run the migrations
-    return db.AutoMigrate(&entity.Book{}, &entity.Borrow{}, &entity.User{})
+	// Run the migrations
+	return db.AutoMigrate(&entity.Book{}, &entity.Borrow{}, &entity.User{})
 }
