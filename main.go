@@ -54,7 +54,7 @@ func main() {
 	authHandler := handler.NewAuthHandler(authUseCase, config.JWTSecret, logger)
 
 	//route
-	app.Post("/api/v1/auth/signup", authHandler)
+	app.Post("/api/v1/auth/signup", authHandler.Register)
 
 	// -- auth
 

@@ -1,25 +1,25 @@
 package handler
 
 import (
-	"log"
-
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/entity"
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/model/user"
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/internal/usecase"
 	"github.com/fierzahaikkal/neocourse-be-boilerplate-golang/pkg/utils"
 	"github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
 )
 
 type AuthHandler struct {
 	useCase   *usecase.AuthUseCase
-	log       *log.Logger
+	log       *logrus.Logger
 	JWTSecret string
 }
 
-func NewAuthHandler(useCase *usecase.AuthUseCase, JWTSecret string) *AuthHandler {
+func NewAuthHandler(useCase *usecase.AuthUseCase, JWTSecret string, log *logrus.Logger) *AuthHandler {
 	return &AuthHandler{
 		useCase:   useCase,
 		JWTSecret: JWTSecret,
+		log:       log,
 	}
 }
 
